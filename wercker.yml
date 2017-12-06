@@ -30,6 +30,7 @@ build:
         code: |
           cd AlphaProducts
           mvn clean -Dmaven.test.skip=true install
+          ls -lharR
 
 push-release:
   steps:
