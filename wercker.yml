@@ -28,6 +28,7 @@ build:
     - script:
         name: maven build
         code: |
+          cd AlphaProducts
           mvn build
 
 push-release:
