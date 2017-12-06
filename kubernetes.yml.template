@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: struts-ui
+  labels:
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: struts-ui
+  template:
+    metadata:
+      labels:
+        app: struts-ui
+        commit: ${WERCKER_GIT_COMMIT}
+        color: ${COLOR}
+    spec:
+      containers:
+      - name: struts-ui
+        image: ${DOCKER_REPO}:${WERCKER_GIT_BRANCH}-${WERCKER_GIT_COMMIT}
+        imagePullPolicy: Always
+        ports:
+        - name: struts-ui
+          containerPort: 80
+          protocol: TCP
+      imagePullSecrets:
+        - name: wercker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: struts-ui
+  labels:
+    app: struts-ui
+    commit: ${WERCKER_GIT_COMMIT}
+spec:
+  ports:
+  - port: 30000
+    targetPort: 80
+  selector:
+    app: struts-ui
+    commit: ${WERCKER_GIT_COMMIT}
+  type: LoadBalancer
+---
