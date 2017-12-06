@@ -30,16 +30,15 @@ build:
         code: |
           cd AlphaProducts
           mvn clean -Dmaven.test.skip=true install
-          ls -lharR
-
+          
 push-release:
   steps:
     - internal/docker-push:
         tag: $WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
         working-dir: /pipeline/source
         ports: "80"
-        cmd: sh target/bin/start
-
+        cmd: sh ./start.sh
+        
 #delete any existing Wercker secret before creating, to accommodate secret changes
 inject-secret:
     box:
