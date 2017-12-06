@@ -29,7 +29,7 @@ build:
         name: maven build
         code: |
           cd AlphaProducts
-          mvn build
+          mvn clean -Dmaven.test.skip=true install
 
 push-release:
   steps:
